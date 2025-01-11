@@ -8,7 +8,7 @@ type ReportTypes = {
  
   score: number;
  
-  date: Date;
+  date: Date | string;
 
   isVouted?: boolean
  }
@@ -28,7 +28,10 @@ type JokeData = {
 const resultDiv = document.getElementById('result')!;
 const button = document.getElementById("otra-broma")!;
 const bromaContainer = document.querySelector('.result');
-let jokeId = 0;
+let jokeId = 1;
+let score = 0;
+const reportAcudits : ReportTypes [] = [];
+
 
 //validación 
 
@@ -36,61 +39,73 @@ if (!resultDiv || !button) {
   throw new Error("Los elementos del DOM no se encontraron correctamente.");
 }
 
-const reportAcudits : ReportTypes [] = [];
 
 
-
-function traerBroma(){
-  fetch('https://icanhazdadjoke.com/slack', {
+function traerBroma(): Promise<JokeData> {
+  
+  return fetch('https://icanhazdadjoke.com/slack', {
     method: 'GET',
     headers: {
         'Accept': 'application/json'
-    }
+    },
   })
-  .then(res => {
-    if (!res.ok) {
-      throw new Error('Error en la resposta de l\'API');
-  }
-  return res.json();
-  })
-  .then(data => {
-    console.log(data);
-    displayBroma(data);
-   // crearAcudit(id, joke, score = 0);
-  })
-  .catch(error => {
-    console.error('Hi ha hagut un error:', error);
-});
 
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la resposta de l\'API');
+    }  
+    return response.json();
+  })
+
+  .then((data: JokeData) => {
+    console.log("Broma obtenida:", data);
+    return data;
+  })
+
+  .catch((error) => {
+    console.error('Hi ha hagut un error:', error);
+    throw error;
+  });
 }
 
-function displayBroma(data : JokeData) : void {
+
+
+function main() {
   
-  const chiste = data.attachments[0].text;
-  console.log(chiste);
-  console.log(typeof chiste);
-  resultDiv.innerHTML = chiste;
+  traerBroma()
+    
+  .then((data: JokeData) => {
+    const chiste : string = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
+    displayBroma(chiste); // solo muestra e el dom
+    crearAcudit(jokeId, chiste, score);  // primera roma co valores por
+    })
+  .catch((error) => {
+      console.error("No se pudo completar el proceso:", error);
+    });
+}
+  
+function displayBroma(data : string) : void{
+  resultDiv.innerHTML = data;
   };
   
 
+
 // Función para crear un reporte de una broma
- function crearAcudit (id:number, joke: string, score: number ): ReportTypes{
-    
+ function crearAcudit (id:number, joke: string, score: number ): void{
+  
 
     const alreadyAcudit = reportAcudits.find((acudit) => acudit.id === id);
+    console.log(alreadyAcudit);
     
+    if (alreadyAcudit) return console.log("La broma ya ha sido reportada:", alreadyAcudit);
+  
     
-    if (alreadyAcudit) {
-      console.log("La broma ya ha sido reportada:", alreadyAcudit);
-    return alreadyAcudit;
-    };
-
     // sio la ecuetra la crea
     const acudit: ReportTypes = {
       id,
       joke, 
       score, 
-      date : new Date(),
+      date : new Date().toISOString(),
       isVouted: true,
     };
 
@@ -98,48 +113,47 @@ function displayBroma(data : JokeData) : void {
   reportAcudits.push(acudit);
   console.log("Broma reportada:", acudit);
   console.log("Array de reportes actualizado:", reportAcudits);
-
-  return acudit;
+  
+  jokeId++;
+  
 }
 
-
-
-// Conectar la API con el botón del DOM
-button.addEventListener("click", traerBroma);
-  
 // Al pulsar "Otra broma", guarda la actual en el array
+
+
+/*
 button.addEventListener("click", () => {
   const jokeText = resultDiv.textContent;
+  console.log(jokeText);
+  console.log(typeof jokeText);
 
-  if (!jokeText) {
-    console.error("No hay ninguna broma para guardar.");
-    return;
-  }
- 
-   // ID de la broma por defecto
-  jokeId++;
-   const score = 0; // Score inicial por defecto
-
+  if (!jokeText) return console.error("No hay ninguna broma para guardar.");
+  
+  jokeId++; // ID de la broma por defecto
+  let score = 0; // iicializar, // si o la putua se queedará a 0
   crearAcudit(jokeId, jokeText, score);
+
 });
 
+*/
 
-function puntuarBroma( score: number, id:number): void {
 
-  console.log(" Puntuación de:", score);
-  
-  const punts = reportAcudits.find( acudit => acudit.id === id);
-  console.log(punts);
-  if(!punts){
-    console.error("No se ha encontrado la broma a puntuar");
-    
-  }else{
-    // Actualizar el score directamente
-    punts.score = score; // Asignar el nuevo score
-    console.log("Broma puntuada:", punts);
+function puntuarBroma(score: number): void {
+  // Encuentra la última broma en el array
+  const bromaActual = reportAcudits[reportAcudits.length - 1];
+
+  if (!bromaActual) {
+    console.error("No hay ninguna broma para puntuar.");
+    return;
   }
-  // ates de llamarla hay que validar si la roma ya existe!!
-  //crearAcudit(punts.id, punts.joke, score);
+
+  // Sumar el score al actual
+  bromaActual.score += score;
+
+  console.log("Broma puntuada:", bromaActual);
 }
 
+
+
+main();
 
