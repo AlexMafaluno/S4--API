@@ -21,25 +21,29 @@ Promesas y Asincronía: Para gestionar las solicitudes HTTP de manera asíncrona
 
 Para instalar y configurar el proyecto, sigue estos pasos:
 
-1. Clonar el Proyecto
+1. *Clonar el Proyecto*
 Primero, clona el repositorio en tu máquina local.
 
+´´´
 bash
 Copiar código
 git clone https://github.com/tu-usuario/tu-repositorio.git
+´´´
 cd tu-repositorio
-2. Instalar Node.js
+
+2. *Instalar Node.js*
 Si aún no tienes Node.js instalado, ve a Node.js official website y descarga la versión recomendada.
 
-3. Instalar Dependencias
+3. **Instalar Dependencias**
 Dentro de la carpeta del proyecto, instala las dependencias necesarias usando npm (Node Package Manager):
-
+´´´
 bash
 Copiar código
 npm install
-4. Instalar TypeScript
+4. *Instalar TypeScript*
 Si no tienes TypeScript instalado globalmente en tu máquina, puedes hacerlo con el siguiente comando:
-
+´´´
+´´´
 bash
 Copiar código
 npm install -g typescript
@@ -48,26 +52,33 @@ Luego, para asegurarte de que TypeScript está correctamente instalado, puedes c
 bash
 Copiar código
 tsc --version
-5. Compilar TypeScript a JavaScript
-Para compilar el código TypeScript a JavaScript, usa el siguiente comando:
 
+5. *Compilar TypeScript a JavaScript*
+Para compilar el código TypeScript a JavaScript, usa el siguiente comando:
+´´´
 bash
 Copiar código
 tsc
+´´´
 Esto generará el archivo JavaScript a partir del código TypeScript.
 
-6. Configurar el Proxy (Servidor Express)
+6. **Configurar el Proxy (Servidor Express)**
 El proyecto utiliza un servidor Express que actúa como proxy para hacer las consultas a la API de bromas sin sufrir problemas de CORS. El código está en el archivo proxy.js.
 
 Para ejecutar el servidor Express, usa el siguiente comando:
-
+´´´
 bash
 Copiar código
 node proxy.js
-Esto iniciará el servidor en http://localhost:3000.
+Si proxy.js está dentro de la carpeta src, ejecuta:
+node src proxy.js
 
-7. Ejecutar el Proyecto en el Navegador
-Una vez que el servidor esté en funcionamiento, abre tu navegador y dirígete a http://localhost:3000 para ver la interfaz y consultar las bromas. El servidor enviará las respuestas de la API y las mostrará en la página.
+Esto iniciará el servidor en http://localhost:3000.
+´´´
+7. **Ejecutar el Proyecto en el Navegador**
+
+Una vez que el servidor esté en funcionamiento, abre tu navegador y dirígete a http://localhost:3000 para ver la interfaz y consultar las bromas. 
+El servidor enviará las respuestas de la API y las mostrará en la página.
 
 
 Proporciona instrucciones paso a paso para clonar el repositorio e instalar las dependencias necesarias.
