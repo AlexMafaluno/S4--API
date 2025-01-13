@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 //usado el operador de aserció no nula !. Le digo a TS qie confie que el valor no es null
 const resultDiv = document.getElementById('result');
 const button = document.getElementById("otra-broma");
@@ -32,6 +41,75 @@ function traerBroma() {
         throw error;
     });
 }
+function traerTiempo() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const response = yield fetch('https://api.openweathermap.org/data/2.5/weather?q=Barcelona,es&appid=6c67d66569fb8dd088c593f9164f514b&units=metric&lang=es', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Error en la resposta de l\'API');
+            }
+            const data = yield response.json();
+            mostrarTiempo(data);
+            console.log("Temperatura actual:", data.main.temp);
+        }
+        catch (error) {
+            console.error('Error:', error);
+        }
+    });
+}
+;
+function mostrarTiempo(data) {
+    const info = document.querySelector('#infoMeteo');
+    const iconMeteo = document.querySelector('#iconMeteo');
+    if (iconMeteo instanceof HTMLElement) {
+        iconMeteo.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="icono del clima">`;
+        // iconMeteo.innerHTML = <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="icono del clima">;
+        // `<i class="wi wi-owm-${data.weather[0].id}"></i>`;
+    }
+    else {
+        console.error('Element with ID "iconMeteo" not found or is not a valid HTML element');
+    }
+    if (info instanceof HTMLElement) {
+        info.innerHTML = `${data.name}: ${data.weather[0].description} <br>
+    ${parseInt(data.main.temp)}°C`;
+    }
+    else {
+        console.error('Element with ID "infoMeteo" not found or is not a valid HTML element');
+    }
+}
+;
+traerTiempo();
+/*
+async function traerTiempo(){
+  console.log("Estoy en traer tiempo");
+  try {
+    const response = await fetch('http://localhost:4000/api/temperatura', {
+    method: 'GET',
+    headers: {  'Accept': 'application/json'
+    },
+    })
+
+  if (!response.ok) {
+    throw new Error('Error en la resposta de l\'API');
+  }
+  const data = await response.json();
+  const temperature = data.current.temperature;
+  console.log("Temperatura actual:", temperature);
+  displayTemperature(temperature);
+
+} catch (error) {
+  console.error('Hi ha hagut un error:', error);
+  throw error;
+}
+
+};
+
+*/
 function main() {
     traerBroma()
         .then((data) => {
@@ -42,9 +120,18 @@ function main() {
         .catch((error) => {
         console.error("No se pudo completar el proceso:", error);
     });
+    console.log("Aquí llego");
+    traerTiempo();
 }
+;
+//DISPLAYS
 function displayBroma(data) {
     resultDiv.innerHTML = data;
+}
+;
+function displayTemperature(data) {
+    const temperatureDiv = document.getElementById('temperatura');
+    temperatureDiv.innerHTML = `La temperatura actual es: ${data}°C`;
 }
 ;
 // Función para crear un reporte de una broma

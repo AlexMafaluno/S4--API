@@ -3,16 +3,11 @@
 type ReportTypes = {
 
   id: number;
-
   joke: string;
- 
   score: number;
- 
-  date: Date | string;
-
+  date: Date | string
   isVouted?: boolean
- }
-
+ };
 
 type JokeData = {
   attachments: {
@@ -24,8 +19,11 @@ type JokeData = {
   username: string;
 };
 
+type Temperature = number;
+
 //usado el operador de aserció no nula !. Le digo a TS qie confie que el valor no es null
 const resultDiv = document.getElementById('result')!;
+
 const button = document.getElementById("otra-broma")!;
 const bromaContainer = document.querySelector('.result');
 let jokeId = 1;
@@ -69,6 +67,80 @@ function traerBroma(): Promise<JokeData> {
 }
 
 
+async function traerTiempo() {
+ 
+  try {
+    const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=Barcelona,es&appid=6c67d66569fb8dd088c593f9164f514b&units=metric&lang=es', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json'
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Error en la resposta de l\'API');
+  }  
+  const data = await response.json();
+  mostrarTiempo(data);
+  console.log("Temperatura actual:", data.main.temp);
+        }catch (error) {
+            console.error('Error:', error);
+        }
+};
+
+
+
+function mostrarTiempo(data: any) {
+  const info = document.querySelector('#infoMeteo');
+  const iconMeteo = document.querySelector('#iconMeteo');
+  
+  if (iconMeteo instanceof HTMLElement) {
+    iconMeteo.innerHTML = `<img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="icono del clima">`;
+    // iconMeteo.innerHTML = <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="icono del clima">;
+    // `<i class="wi wi-owm-${data.weather[0].id}"></i>`;
+  }
+    else {
+    console.error('Element with ID "iconMeteo" not found or is not a valid HTML element');
+  }
+  if (info instanceof HTMLElement) {
+    info.innerHTML = `${data.name}: ${data.weather[0].description} <br>
+    ${parseInt(data.main.temp)}°C`;
+  }
+  else {
+  console.error('Element with ID "infoMeteo" not found or is not a valid HTML element');
+  }
+};
+
+traerTiempo();
+
+
+/*
+async function traerTiempo(){
+  console.log("Estoy en traer tiempo");
+  try {
+    const response = await fetch('http://localhost:4000/api/temperatura', {
+    method: 'GET',
+    headers: {  'Accept': 'application/json'
+    },
+    })
+
+  if (!response.ok) {
+    throw new Error('Error en la resposta de l\'API');
+  }
+  const data = await response.json();
+  const temperature = data.current.temperature;
+  console.log("Temperatura actual:", temperature);
+  displayTemperature(temperature);
+
+} catch (error) {
+  console.error('Hi ha hagut un error:', error);
+  throw error;
+}
+
+};
+
+*/
+
 
 function main() {
   
@@ -82,12 +154,24 @@ function main() {
   .catch((error) => {
       console.error("No se pudo completar el proceso:", error);
     });
-}
-  
+
+console.log("Aquí llego");
+  traerTiempo()
+ 
+};
+
+
+//DISPLAYS
+
 function displayBroma(data : string) : void{
   resultDiv.innerHTML = data;
   };
   
+function displayTemperature(data : number) : void{
+  const temperatureDiv = document.getElementById('temperatura')!;
+  temperatureDiv.innerHTML = `La temperatura actual es: ${data}°C`;
+};
+
 
 
 // Función para crear un reporte de una broma

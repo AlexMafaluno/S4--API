@@ -1,5 +1,10 @@
 {
   "devDependencies": {
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2"
   }
 }
