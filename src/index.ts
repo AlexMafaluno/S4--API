@@ -19,7 +19,27 @@ type JokeData = {
   username: string;
 };
 
-type Temperature = number;
+type WeatherData = {
+  main: {
+    temp: number;
+  };
+  weather: {
+    icon: string;
+    description: string;
+  }[];
+  name: string;
+};
+
+type ChuckNorrisJoke = {
+  categories: string[];
+  created_at: string;
+  icon_url: string;
+  id: string;
+  updated_at: string;
+  url: string;
+  value: string;
+};
+
 
 //usado el operador de aserció no nula !. Le digo a TS qie confie que el valor no es null
 const resultDiv = document.getElementById('result')!;
@@ -37,7 +57,39 @@ if (!resultDiv || !button) {
   throw new Error("Los elementos del DOM no se encontraron correctamente.");
 }
 
+// llama a ua función que traerá una broma o otra
+// maejo de promesas correctamente
+async function alternarBroma() {
+  let random = Math.random();
+  console.log("Broma alternada: ", random);
+  random > 0.5 ? await traerBroma() : await traerChuck();
+};
 
+function traerChuck(): Promise<ChuckNorrisJoke> {
+
+  return fetch('https://api.chucknorris.io/jokes/random', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json'
+    },
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la resposta de l\'API');
+    }  
+    return response.json();
+  })
+  .then((data) => {
+    const chiste : string = data.value;
+    console.log("Broma obtenida:", chiste);
+    displayBroma(chiste);
+    crearAcudit(jokeId, chiste, score);  // push al array
+  })
+  .catch((error) => {
+    console.error('Hi ha hagut un error:', error);
+    throw error;
+  });
+};
 
 function traerBroma(): Promise<JokeData> {
   
@@ -57,7 +109,9 @@ function traerBroma(): Promise<JokeData> {
 
   .then((data: JokeData) => {
     console.log("Broma obtenida:", data);
-    return data;
+    const chiste : string = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
+    displayBroma(chiste); // solo muestra e el dom
+    crearAcudit(jokeId, chiste, score);  // push al array
   })
 
   .catch((error) => {
@@ -65,7 +119,6 @@ function traerBroma(): Promise<JokeData> {
     throw error;
   });
 }
-
 
 async function traerTiempo() {
  
@@ -80,14 +133,13 @@ async function traerTiempo() {
   if (!response.ok) {
     throw new Error('Error en la resposta de l\'API');
   }  
-  const data = await response.json();
+  const data: WeatherData = await response.json();
   mostrarTiempo(data);
   console.log("Temperatura actual:", data.main.temp);
         }catch (error) {
             console.error('Error:', error);
         }
 };
-
 
 
 function mostrarTiempo(data: any) {
@@ -111,55 +163,10 @@ function mostrarTiempo(data: any) {
   }
 };
 
-traerTiempo();
-
-
-/*
-async function traerTiempo(){
-  console.log("Estoy en traer tiempo");
-  try {
-    const response = await fetch('http://localhost:4000/api/temperatura', {
-    method: 'GET',
-    headers: {  'Accept': 'application/json'
-    },
-    })
-
-  if (!response.ok) {
-    throw new Error('Error en la resposta de l\'API');
-  }
-  const data = await response.json();
-  const temperature = data.current.temperature;
-  console.log("Temperatura actual:", temperature);
-  displayTemperature(temperature);
-
-} catch (error) {
-  console.error('Hi ha hagut un error:', error);
-  throw error;
-}
-
-};
-
-*/
-
-
 function main() {
-  
-  traerBroma()
-    
-  .then((data: JokeData) => {
-    const chiste : string = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
-    displayBroma(chiste); // solo muestra e el dom
-    crearAcudit(jokeId, chiste, score);  // primera roma co valores por
-    })
-  .catch((error) => {
-      console.error("No se pudo completar el proceso:", error);
-    });
-
-console.log("Aquí llego");
   traerTiempo()
- 
+  alternarBroma()
 };
-
 
 //DISPLAYS
 
@@ -167,10 +174,7 @@ function displayBroma(data : string) : void{
   resultDiv.innerHTML = data;
   };
   
-function displayTemperature(data : number) : void{
-  const temperatureDiv = document.getElementById('temperatura')!;
-  temperatureDiv.innerHTML = `La temperatura actual es: ${data}°C`;
-};
+
 
 
 
@@ -221,6 +225,7 @@ button.addEventListener("click", () => {
 
 */
 
+//PUTUAR BROMA
 
 function puntuarBroma(score: number): void {
   // Encuentra la última broma en el array

@@ -19,6 +19,41 @@ const reportAcudits = [];
 if (!resultDiv || !button) {
     throw new Error("Los elementos del DOM no se encontraron correctamente.");
 }
+// llama a ua función que traerá una broma o otra
+// maejo de promesas correctamente
+function alternarBroma() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let random = Math.random();
+        console.log("Broma alternada: ", random);
+        random > 0.5 ? yield traerBroma() : yield traerChuck();
+    });
+}
+;
+function traerChuck() {
+    return fetch('https://api.chucknorris.io/jokes/random', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json'
+        },
+    })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la resposta de l\'API');
+        }
+        return response.json();
+    })
+        .then((data) => {
+        const chiste = data.value;
+        console.log("Broma obtenida:", chiste);
+        displayBroma(chiste);
+        crearAcudit(jokeId, chiste, score); // push al array
+    })
+        .catch((error) => {
+        console.error('Hi ha hagut un error:', error);
+        throw error;
+    });
+}
+;
 function traerBroma() {
     return fetch('https://icanhazdadjoke.com/slack', {
         method: 'GET',
@@ -34,7 +69,9 @@ function traerBroma() {
     })
         .then((data) => {
         console.log("Broma obtenida:", data);
-        return data;
+        const chiste = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
+        displayBroma(chiste); // solo muestra e el dom
+        crearAcudit(jokeId, chiste, score); // push al array
     })
         .catch((error) => {
         console.error('Hi ha hagut un error:', error);
@@ -83,55 +120,14 @@ function mostrarTiempo(data) {
     }
 }
 ;
-traerTiempo();
-/*
-async function traerTiempo(){
-  console.log("Estoy en traer tiempo");
-  try {
-    const response = await fetch('http://localhost:4000/api/temperatura', {
-    method: 'GET',
-    headers: {  'Accept': 'application/json'
-    },
-    })
-
-  if (!response.ok) {
-    throw new Error('Error en la resposta de l\'API');
-  }
-  const data = await response.json();
-  const temperature = data.current.temperature;
-  console.log("Temperatura actual:", temperature);
-  displayTemperature(temperature);
-
-} catch (error) {
-  console.error('Hi ha hagut un error:', error);
-  throw error;
-}
-
-};
-
-*/
 function main() {
-    traerBroma()
-        .then((data) => {
-        const chiste = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
-        displayBroma(chiste); // solo muestra e el dom
-        crearAcudit(jokeId, chiste, score); // primera roma co valores por
-    })
-        .catch((error) => {
-        console.error("No se pudo completar el proceso:", error);
-    });
-    console.log("Aquí llego");
     traerTiempo();
+    alternarBroma();
 }
 ;
 //DISPLAYS
 function displayBroma(data) {
     resultDiv.innerHTML = data;
-}
-;
-function displayTemperature(data) {
-    const temperatureDiv = document.getElementById('temperatura');
-    temperatureDiv.innerHTML = `La temperatura actual es: ${data}°C`;
 }
 ;
 // Función para crear un reporte de una broma
@@ -170,6 +166,7 @@ button.addEventListener("click", () => {
 });
 
 */
+//PUTUAR BROMA
 function puntuarBroma(score) {
     // Encuentra la última broma en el array
     const bromaActual = reportAcudits[reportAcudits.length - 1];
