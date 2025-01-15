@@ -33,7 +33,7 @@ SPRINT 4
 └── README.md          # Documentación del proyecto
 ```
 ## Instalación y Configuración
-Clona el repositorio en tu máquina local:
+1.**Clona el repositorio en tu máquina local**
 
 ```bash
 Copiar código
@@ -48,7 +48,7 @@ Haz clic derecho en el archivo index.html y selecciona "Open with Live Server" p
 
 
 
-3. **Instalar TypeScript**
+2. **Instalar TypeScript**
 
 Si no tienes TypeScript instalado globalmente en tu máquina, puedes hacerlo con el siguiente comando:
 ```
@@ -63,7 +63,7 @@ bash
 Copiar código
 tsc --version
 ```
-5. **Compilar TypeScript a JavaScript**
+3. **Compilar TypeScript a JavaScript**
 Para compilar el código TypeScript a JavaScript, usa el siguiente comando:
 ```
 bash
@@ -72,13 +72,13 @@ npx tsc
 ```
 Esto generará el archivo JavaScript a partir del código TypeScript.
 
-Puedes activar el modo watch usando el siguiete comando:
+Puedes activar el modo watch usando el siguiente comando:
 ```
 bash
 Copiar código
 npx tsc -w
 ```
-8. **Edpoints API para Obtener el Tiempo**:
+4. **Edpoints API para Obtener el Tiempo**:
 
 Endpoint disponible para obtener la información del clima:
 
@@ -88,7 +88,6 @@ Endpoint disponible para obtener la información de chistes de Chuck Norris:
 https://api.chucknorris.io/jokes/random
 
 
-
-9. **Futuras mejoras**:
+# Futuras mejoras
 
 Sugerencias de futuras mejoras y funcionalidades.
