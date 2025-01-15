@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Alejandro Martinez">
+    <meta name="keywords" content="CSS, HTML, frontend">
+    <meta name="description" content="Curso IT academy frontend">
+    <title>API Jokes</title>
     <!-- CSS bootstrap -->
+    <link rel= "stylesheet" type= "text/css" href = "styles/styles2.css"/>
+    <!-- Fontawesome icons-->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div class ="container text-center w-25 mt-2">
-    <div class="row">
-        <div class="col">
-            <div class="card h-100 bg-transparent">
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <div id="infoMeteo"></div>
-                        <div id="iconMeteo"></div>
-                        <h2>¿Preparado para reir?</h2>
-                        <div id="result" class=""></div>
-                        <button type="button" class="mt-2 btn btn-primary" onclick="puntuarBroma(1)">⭐</button>
-                        <button type="button" class="mt-2 btn btn-primary" onclick="puntuarBroma(2)">⭐⭐</button>
-                        <button type="button" class="mt-2 btn btn-primary" onclick="puntuarBroma(3)">⭐⭐⭐</button> <br>
-                        <button type="button" id ="otra-broma" class="mt-2 btn btn-primary" onclick="main()">Otra Broma</button>
-                        
-                    </div>
-                </div>
-            </div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-light">
+    <div class="container justify-content-start mx-1">
+        <div id="iconMeteo" alt="" width="10" height="10"></div>
+        <div id="infoMeteo" class="mx-2"> </div>
+    </div>
+</nav>
+
+
+<div class="container-xl text-center  mt-2">
+    <div class="row align-items-center my-5">
+        <div class="col-sm-12 col-md-12 col-ls-12 col-xl-12 mx-sm-auto ">
+              <img class="dot" src="./images/Dot.png" class="img-fluid" alt="dot"/>
+        </div>
+        <div id="bromas"  class="col-sm-12 col-md-12 col-ls-12 col-xl-12 mx-auto " >
+                <h2 class="text-white">¿Preparado para reir?</h2>
+                <div id="result" class="text-white  my-4"></div>
+                <i class="fa-solid fa-face-sad-tear icono" onclick="puntuarBroma(1)"></i>
+                <i class="fa-solid fa-face-meh  icono mx-2" onclick="puntuarBroma(2)"></i>
+                <i class="fa-solid fa-face-grin-tears  icono" onclick="puntuarBroma(3)"></i><br>
+                <button type="button" id ="otra-broma" class="mt-2 btn btn-secondary" onclick="main()">Otra Broma</button>        
         </div>
     </div>
 </div>
-    <script src="src/index.js"></script>
+
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="src/index.js"></script>
 </body>
 </html>

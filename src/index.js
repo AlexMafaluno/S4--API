@@ -47,13 +47,13 @@ function traerChuck() {
         console.log("Broma obtenida:", chiste);
         displayBroma(chiste);
         crearAcudit(jokeId, chiste, score); // push al array
+        return data;
     })
         .catch((error) => {
         console.error('Hi ha hagut un error:', error);
         throw error;
     });
 }
-;
 function traerBroma() {
     return fetch('https://icanhazdadjoke.com/slack', {
         method: 'GET',
@@ -72,6 +72,7 @@ function traerBroma() {
         const chiste = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
         displayBroma(chiste); // solo muestra e el dom
         crearAcudit(jokeId, chiste, score); // push al array
+        return data;
     })
         .catch((error) => {
         console.error('Hi ha hagut un error:', error);
@@ -142,7 +143,6 @@ function crearAcudit(id, joke, score) {
         joke,
         score,
         date: new Date().toISOString(),
-        isVouted: true,
     };
     // Guardar la broma en el array de reportes
     reportAcudits.push(acudit);
@@ -150,22 +150,6 @@ function crearAcudit(id, joke, score) {
     console.log("Array de reportes actualizado:", reportAcudits);
     jokeId++;
 }
-// Al pulsar "Otra broma", guarda la actual en el array
-/*
-button.addEventListener("click", () => {
-  const jokeText = resultDiv.textContent;
-  console.log(jokeText);
-  console.log(typeof jokeText);
-
-  if (!jokeText) return console.error("No hay ninguna broma para guardar.");
-  
-  jokeId++; // ID de la broma por defecto
-  let score = 0; // iicializar, // si o la putua se queedará a 0
-  crearAcudit(jokeId, jokeText, score);
-
-});
-
-*/
 //PUTUAR BROMA
 function puntuarBroma(score) {
     // Encuentra la última broma en el array
@@ -174,8 +158,14 @@ function puntuarBroma(score) {
         console.error("No hay ninguna broma para puntuar.");
         return;
     }
-    // Sumar el score al actual
-    bromaActual.score += score;
+    // Actualiza el score si es diferente
+    if (bromaActual.score !== score) {
+        bromaActual.score = score;
+        console.log("El score ha cambiado a:", score);
+    }
+    else {
+        console.log("El score ya es:", score);
+    }
     console.log("Broma puntuada:", bromaActual);
 }
 main();

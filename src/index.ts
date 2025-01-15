@@ -43,7 +43,6 @@ type ChuckNorrisJoke = {
 
 //usado el operador de aserció no nula !. Le digo a TS qie confie que el valor no es null
 const resultDiv = document.getElementById('result')!;
-
 const button = document.getElementById("otra-broma")!;
 const bromaContainer = document.querySelector('.result');
 let jokeId = 1;
@@ -84,12 +83,13 @@ function traerChuck(): Promise<ChuckNorrisJoke> {
     console.log("Broma obtenida:", chiste);
     displayBroma(chiste);
     crearAcudit(jokeId, chiste, score);  // push al array
+    return data;
   })
   .catch((error) => {
     console.error('Hi ha hagut un error:', error);
     throw error;
   });
-};
+}
 
 function traerBroma(): Promise<JokeData> {
   
@@ -107,13 +107,13 @@ function traerBroma(): Promise<JokeData> {
     return response.json();
   })
 
-  .then((data: JokeData) => {
+  .then((data) => {
     console.log("Broma obtenida:", data);
     const chiste : string = data.attachments[0].text; // cada vez que llama a la fució traer roma deeria traer una broma nueva y guardarla e chiste
     displayBroma(chiste); // solo muestra e el dom
     crearAcudit(jokeId, chiste, score);  // push al array
+    return data;
   })
-
   .catch((error) => {
     console.error('Hi ha hagut un error:', error);
     throw error;
@@ -175,9 +175,6 @@ function displayBroma(data : string) : void{
   };
   
 
-
-
-
 // Función para crear un reporte de una broma
  function crearAcudit (id:number, joke: string, score: number ): void{
   
@@ -194,7 +191,6 @@ function displayBroma(data : string) : void{
       joke, 
       score, 
       date : new Date().toISOString(),
-      isVouted: true,
     };
 
     // Guardar la broma en el array de reportes
@@ -206,28 +202,11 @@ function displayBroma(data : string) : void{
   
 }
 
-// Al pulsar "Otra broma", guarda la actual en el array
-
-
-/*
-button.addEventListener("click", () => {
-  const jokeText = resultDiv.textContent;
-  console.log(jokeText);
-  console.log(typeof jokeText);
-
-  if (!jokeText) return console.error("No hay ninguna broma para guardar.");
-  
-  jokeId++; // ID de la broma por defecto
-  let score = 0; // iicializar, // si o la putua se queedará a 0
-  crearAcudit(jokeId, jokeText, score);
-
-});
-
-*/
-
 //PUTUAR BROMA
 
 function puntuarBroma(score: number): void {
+  
+
   // Encuentra la última broma en el array
   const bromaActual = reportAcudits[reportAcudits.length - 1];
 
@@ -236,9 +215,13 @@ function puntuarBroma(score: number): void {
     return;
   }
 
-  // Sumar el score al actual
-  bromaActual.score += score;
-
+  // Actualiza el score si es diferente
+  if (bromaActual.score !== score) {
+    bromaActual.score = score;
+    console.log("El score ha cambiado a:", score);
+  } else {
+    console.log("El score ya es:", score);
+  }
   console.log("Broma puntuada:", bromaActual);
 }
 
