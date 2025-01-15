@@ -3,7 +3,7 @@
 ![image](https://github.com/user-attachments/assets/a5674670-64d9-4d19-b465-5d6bd891f9f7)
 
 
-1. **Introducción**:
+## Introducción 
 
 Este proyecto tiene como objetivo realizar consultas a una API de bromas y mostrar el resultado en una página web. 
 Se hace uso de promesas y asincronía para manejar las solicitudes HTTP y obtener las bromas.
@@ -22,18 +22,18 @@ Se hace uso de promesas y asincronía para manejar las solicitudes HTTP y obtene
 ```bash
 SPRINT 4
 
-├── /css
-│   ├── styles.css     # Archivo de estilos personalizados
-├── /img               # Carpeta de imágenes de productos y elementos visuales
-├── /js
+├── /styles
+│   ├── styles2.css    # Archivo de estilos personalizados
+│   ├── styles2.scss   # Archivo de estilos personalizados
+├── /images            # Carpeta de imágenes de productos y elementos visuales
+├── /src
 │   ├── index.js       # Funciones principales (carrito, promociones, validaciones)
-│   ├── checkout.js    # Validación dinámica y personalizada del formulario
+│   ├── index.ts       # Código Typescript( tipado de datos)
 ├── index.html         # Página principal del e-commerce
-├── checkout.html      # Página de checkout para validar compras
 └── README.md          # Documentación del proyecto
 ```
 ## Instalación y Configuración
-Clona el repositorio en tu máquina local:
+1.**Clona el repositorio en tu máquina local**
 
 ```bash
 Copiar código
@@ -48,7 +48,7 @@ Haz clic derecho en el archivo index.html y selecciona "Open with Live Server" p
 
 
 
-3. **Instalar TypeScript**
+2. **Instalar TypeScript**
 
 Si no tienes TypeScript instalado globalmente en tu máquina, puedes hacerlo con el siguiente comando:
 ```
@@ -63,20 +63,31 @@ bash
 Copiar código
 tsc --version
 ```
-5. **Compilar TypeScript a JavaScript**
+3. **Compilar TypeScript a JavaScript**
 Para compilar el código TypeScript a JavaScript, usa el siguiente comando:
 ```
 bash
 Copiar código
-tsc
+npx tsc
 ```
 Esto generará el archivo JavaScript a partir del código TypeScript.
 
+Puedes activar el modo watch usando el siguiente comando:
+```
+bash
+Copiar código
+npx tsc -w
+```
+4. **Edpoints API para Obtener el Tiempo**:
 
-8. **API para Obtener el Tiempo**:
+Endpoint disponible para obtener la información del clima:
 
-Detalla el endpoint disponible en el servidor proxy para obtener la información del clima.
 
-9. **Futuras mejoras**:
+Endpoint disponible para obtener la información de chistes de Chuck Norris:
+
+https://api.chucknorris.io/jokes/random
+
+
+# Futuras mejoras
 
 Sugerencias de futuras mejoras y funcionalidades.
