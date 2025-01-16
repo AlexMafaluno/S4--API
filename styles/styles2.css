@@ -37,11 +37,46 @@ img.dot {
   padding: auto;
 }
 
-.icono {
-  font-size: 2rem;
-  color: white;
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
+.icono {
+  font-size: 2rem;
+}
+
+.icono.rojo {
+  color: lightsalmon;
+}
+
+.icono.amarillo {
+  color: lightgoldenrodyellow;
+}
+
+.icono.verde {
+  color: lightgreen;
+}
+
+@media only screen and (max-width: 600px) {
+  .img.dot {
+    position: absolute;
+    margin-top: 200px;
+    top: 30%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: auto;
+    height: auto;
+  }
+  #bromas {
+    position: relative;
+    margin-top: 100px;
+    /* Asegura que el contenido esté encima */
+  }
+}
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors

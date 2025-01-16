@@ -37,11 +37,46 @@ img.dot {
     padding: auto;
 
   }
+  button {
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer; 
+}
 
 .icono {
     font-size: 2rem;
-    color: white;
 }
+.icono.rojo {
+    color: lightsalmon;
+}
+.icono.amarillo {
+  color: lightgoldenrodyellow;
+}
+
+.icono.verde {
+  color: lightgreen;
+}
+@media only screen and (max-width: 600px) {
+  .img.dot{
+
+    position: absolute; 
+    margin-top: 200px;
+    top: 30%; 
+    left: 40%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1; 
+    width: auto; 
+    height: auto; 
+}
+#bromas {
+  position: relative;
+  margin-top: 100px;
+  /* Asegura que el contenido esté encima */
+}
+   
+}
+
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
