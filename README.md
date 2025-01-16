@@ -11,11 +11,16 @@ Se hace uso de promesas y asincronía para manejar las solicitudes HTTP y obtene
 ## Tecnologías utilizadas
 
 **HTML:** Estructura semántica del proyecto.
-**CSS:** Personalización de estilos para mejorar la identidad visual
+
+**CSS:** Personalización de estilos para mejorar la identidad visual.
+
 **Promesas y Asincronía:** Para gestionar las solicitudes HTTP de manera asíncrona y no bloqueante.
+
 **Bootstrap 5:** Sistema de grillas para diseño responsive. Componentes como botones y navbar.
+
 **JavaScript:** Manipulación dinámica de datos y funcionalidades.
-**TypeScript:**
+
+**TypeScript:** Añade tipado estático.
 
 ## Estructura del Proyecto
 
@@ -29,7 +34,7 @@ SPRINT 4
 ├── /src
 │   ├── index.js       # Funciones principales (carrito, promociones, validaciones)
 │   ├── index.ts       # Código Typescript( tipado de datos)
-├── index.html         # Página principal del e-commerce
+├── index.html         # Página principal
 └── README.md          # Documentación del proyecto
 ```
 ## Instalación y Configuración
@@ -64,6 +69,7 @@ Copiar código
 tsc --version
 ```
 3. **Compilar TypeScript a JavaScript**
+
 Para compilar el código TypeScript a JavaScript, usa el siguiente comando:
 ```
 bash
@@ -78,16 +84,3 @@ bash
 Copiar código
 npx tsc -w
 ```
-4. **Edpoints API para Obtener el Tiempo**:
-
-Endpoint disponible para obtener la información del clima:
-
-
-Endpoint disponible para obtener la información de chistes de Chuck Norris:
-
-https://api.chucknorris.io/jokes/random
-
-
-# Futuras mejoras
-
-Sugerencias de futuras mejoras y funcionalidades.

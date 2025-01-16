@@ -1,26 +1,18 @@
 @charset "UTF-8";
-body {
-  overflow-x: hidden;
+.tiempo {
+  display: flex;
+  align-items: center;
 }
 
-.navbar {
-  position: fixed; /* Asegura que la navbar esté fija en la parte superior */
-  top: 0;
-  left: 0;
+.bromas {
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  z-index: 3; /* Asegúrate de que esté por encima del contenido */
-  height: 100px; /* Altura de la navbar (ajústalo según tu diseño) */
-  background-color: white;
+  padding: 60px;
+  z-index: 2;
 }
 
-#bromas {
-  position: relative; /* Necesario para posicionar correctamente elementos hijos */
-  width: 100%;
-  margin-top: 100px;
-  z-index: 2; /* Asegura que el contenido esté encima */
-}
-
-img.dot {
+.dot {
   position: absolute; /* Permite posicionar el elemento con top, left, etc. */
   top: 50%; /* Centra verticalmente */
   left: 50%; /* Centra horizontalmente */
@@ -30,6 +22,19 @@ img.dot {
   height: auto; /* Mantén la proporción de la imagen */
 }
 
+@media only screen and (max-width: 600px) {
+  .dot {
+    width: 400px;
+  }
+  .bromas {
+    padding: 35px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .bromas {
+    padding: 40px;
+  }
+}
 #result {
   max-width: 400px;
   justify-content: center;
@@ -60,23 +65,6 @@ button {
   color: lightgreen;
 }
 
-@media only screen and (max-width: 600px) {
-  .img.dot {
-    position: absolute;
-    margin-top: 200px;
-    top: 30%;
-    left: 40%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: auto;
-    height: auto;
-  }
-  #bromas {
-    position: relative;
-    margin-top: 100px;
-    /* Asegura que el contenido esté encima */
-  }
-}
 /*!
  * Bootstrap  v5.3.3 (https://getbootstrap.com/)
  * Copyright 2011-2024 The Bootstrap Authors

@@ -87,7 +87,7 @@ function traerBromaRandom(url: string): Promise<JokeData> {
   }
 
   resultDiv.innerHTML = chiste;
-  crearAcudit(jokeId, chiste, score);  // push al array
+  crearAcudit(jokeId, chiste, score); 
   return data;
 })
 .catch((error) => {
@@ -111,7 +111,6 @@ async function traerTiempo() {
   }  
   const data: WeatherData = await response.json();
   mostrarTiempo(data);
-  console.log("Temperatura actual:", data.main.temp);
   }catch (error) {
     console.error('Error:', error);
   }
@@ -153,7 +152,6 @@ main();
   const acudit: ReportTypes = { id, joke, score, date : new Date().toISOString()};
 
   reportAcudits.push(acudit);
-  console.log("Broma reportada:", acudit);
   console.log("Array de reportes actualizado:", reportAcudits);  
   jokeId++;
 };
