@@ -1,6 +1,6 @@
 # Sprint 4 API
 
-![image](https://github.com/user-attachments/assets/a5674670-64d9-4d19-b465-5d6bd891f9f7)
+![image](https://github.com/user-attachments/assets/edf88040-70ea-4997-95d2-1f71587e503e)
 
 
 ## Introducción 
