@@ -32,7 +32,7 @@ SPRINT 4
 │   ├── styles2.scss   # Archivo de estilos personalizados
 ├── /images            # Carpeta de imágenes de productos y elementos visuales
 ├── /src
-│   ├── index.js       # Funciones principales (carrito, promociones, validaciones)
+│   ├── index.js       # Funciones principales
 │   ├── index.ts       # Código Typescript( tipado de datos)
 ├── index.html         # Página principal
 └── README.md          # Documentación del proyecto
